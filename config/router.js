@@ -4,16 +4,29 @@ const { QueryTypes } = require('sequelize');
 const schema = process.env.DB_SCHEMA
 const table = `sales`
 
-let allRoutes = ({app, models})=>{
+let allRoutes = ({models})=>{
 
     router.post("/save", (req, res) => {
 
         let { Sales } = models
         let salesData = req.body || {}
 
+        //Validation
         if(!salesData.amount || !salesData.date || !salesData.username){
             return res.json({
                 message:`amount, date, username are the required fields!`
+            })
+        }
+
+        if((new Date(salesData.date)).toString()==="Invalid Date") {
+            return res.json({
+                message:`Invalid date value is provided!`
+            })
+        }
+
+        if(typeof salesData.amount!=="number") {
+            return res.json({
+                message:`Invalid amount value, it must be number!`
             })
         }
 
@@ -66,7 +79,13 @@ let allRoutes = ({app, models})=>{
             {
                 type: QueryTypes.SELECT
             }
-        ).then(data=>res.send(data))
+        ).then(data=>{
+            // console.log(`data is here `, data)
+            if(data.length){
+                data.map(d=>d.sum=Number(d.sum))
+            }
+            res.send(data)
+        })
     })
 
     return router
