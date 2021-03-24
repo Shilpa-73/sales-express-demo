@@ -24,7 +24,7 @@
 
 6  Once the server started Call the below apis 
 
-    - to save sales data call the route http://localhost:3001/sales/save
+   - to save sales data call the route http://localhost:3001/sales/save
       ```js
          {
               "amount":100,
@@ -33,5 +33,5 @@
          }
       ```
 
-    - to fetch sales data   call the route http://localhost:3001/sales/fetch/:statsType   (statsType must be any of `daily`,`weekly`, `monthly`)
+   - to fetch sales data   call the route http://localhost:3001/sales/fetch/:statsType   (statsType must be any of `daily`,`weekly`, `monthly`)
     
